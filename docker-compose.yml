@@ -1,0 +1,25 @@
+version: '3'
+services:
+  app:
+    image: node:14
+    volumes:
+      - ./D:/website:/usr/src/app
+    working_dir: /usr/src/app
+    ports:
+      - "8802:3302"  # Map host port 8802 to container port 3302
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/mydatabase
+  mongo:
+    image: mongo:latest
+    ports:
+      - "3302:27017"  # Map host port 3302 to container port 27017
+    volumes:
+      - mongodb_data:/data/db
+networks:
+  my_network:
+    driver: bridge
+volumes:
+  mongodb_data:
+
